@@ -30,10 +30,14 @@ namespace backend
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
+                endpoints.MapControllers();
+            });
+            app.UseSpaStaticFiles();
+            app.UseSpa(ApplicationBuilder =>{
+                if(env.IsDevelopment())
                 {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                    ApplicationBuilder.UseProxyToSpaDevelopmentServer("http://localhost:8080");
+                }
             });
         }
     }
